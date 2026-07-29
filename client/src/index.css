@@ -1,0 +1,21 @@
+/* pingboard 디자인 시안 C(따뜻한 친근함) 팔레트 — DESIGN.md 확정 값 그대로. */
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #fffaf3;
+  --color-ink: #382f24;
+  --color-accent: #b5651d;
+  --color-accent-soft: #e08a3c;
+  --color-border-warm: #f0e4d0;
+  --color-card: #ffffff;
+
+  --font-sans:
+    -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
