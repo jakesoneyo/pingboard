@@ -33,4 +33,26 @@ jobs:
       # 없으면 test/app.e2e-spec.ts가 자체적으로 skip되도록 만들어져 있다.
       - run: npm test
 
-  # client 스텝은 덩어리 B(프론트엔드) 구현 이후 추가한다.
+  client:
+    name: client (lint → build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      # 단위 테스트 스위트는 없음(S 티어 스코프 — PLAN B 완료 조건은 build 통과 +
+      # 브라우저/소켓 스크립트를 통한 수동 QA로 대체). 실제 소켓 계약 검증은
+      # 저장소 루트 README의 QA 근거 섹션 참고.
+      - run: npm run build
