@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  server:
+    name: server (lint → build → test)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm run build
+
+      # 단위 테스트는 리포지토리 목 기반이라 DB 없이 돈다(SPEC 4-2, Testcontainers 미적용).
+      # e2e(supertest) 스위트는 실제 Neon DB가 필요해 CI에서는 돌리지 않는다 — DATABASE_URL이
+      # 없으면 test/app.e2e-spec.ts가 자체적으로 skip되도록 만들어져 있다.
+      - run: npm test
+
+  # client 스텝은 덩어리 B(프론트엔드) 구현 이후 추가한다.
