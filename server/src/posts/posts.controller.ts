@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  ParseUUIDPipe,
   Post as HttpPost,
   Query,
   UseGuards,
@@ -27,7 +28,7 @@ export class PostsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<PostDetailDto> {
+  findOne(@Param('id', ParseUUIDPipe) id: string): Promise<PostDetailDto> {
     return this.postsService.findOne(id);
   }
 
