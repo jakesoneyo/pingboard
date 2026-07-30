@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { DEMO_CREDENTIALS, useLogin } from "../hooks/useAuth";
@@ -16,7 +16,19 @@ export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fieldError, setFieldError] = useState<string | null>(null);
+  const [showColdStartHint, setShowColdStartHint] = useState(false);
   const login = useLogin();
+
+  // Render 무료 티어 콜드스타트로 로그인이 오래 걸릴 수 있어, 4초 넘게 pending이면
+  // "화면이 멈췄다"는 오해를 막기 위해 안내 문구를 띄운다. 요청이 끝나면 즉시 정리한다.
+  useEffect(() => {
+    if (!login.isPending) return;
+    const timer = setTimeout(() => setShowColdStartHint(true), 4000);
+    return () => {
+      clearTimeout(timer);
+      setShowColdStartHint(false);
+    };
+  }, [login.isPending]);
 
   const attemptLogin = (values: { email: string; password: string }) => {
     const result = loginSchema.safeParse(values);
@@ -72,6 +84,11 @@ export function LoginPage() {
           >
             로그인
           </button>
+          {showColdStartHint && (
+            <p className="text-center text-xs text-ink/50">
+              서버를 깨우는 중입니다.
+            </p>
+          )}
         </form>
 
         <button
