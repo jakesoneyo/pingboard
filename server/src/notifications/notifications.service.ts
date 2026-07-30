@@ -84,7 +84,6 @@ export class NotificationsService {
         createdAt: notification.createdAt.toISOString(),
         actor: {
           id: context.actor.id,
-          email: context.actor.email,
           nickname: context.actor.nickname,
         },
         post: { id: context.post.id, title: context.post.title },
@@ -107,7 +106,7 @@ export class NotificationsService {
     const qb = this.notifications
       .createQueryBuilder('n')
       .leftJoin('n.actor', 'actor')
-      .addSelect(['actor.id', 'actor.email', 'actor.nickname'])
+      .addSelect(['actor.id', 'actor.nickname'])
       .leftJoin('n.post', 'post')
       .addSelect(['post.id', 'post.title'])
       .leftJoin('n.comment', 'comment')
@@ -132,7 +131,6 @@ export class NotificationsService {
       createdAt: n.createdAt.toISOString(),
       actor: {
         id: n.actor.id,
-        email: n.actor.email,
         nickname: n.actor.nickname,
       },
       post: { id: n.post.id, title: n.post.title },

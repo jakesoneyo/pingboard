@@ -69,7 +69,7 @@ export class CommentsService {
     return {
       id: comment.id,
       content: comment.content,
-      author: { id: actor.id, email: actor.email, nickname: actor.nickname },
+      author: { id: actor.id, nickname: actor.nickname },
       createdAt: comment.createdAt.toISOString(),
     };
   }

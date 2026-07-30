@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserSummaryDto } from '../../auth/dto/auth-response.dto';
+import { AuthorSummaryDto } from '../../auth/dto/auth-response.dto';
 import type { NotificationType } from '../notification.entity';
 
 /** REST(`GET /notifications`)와 소켓(`notification:new`)이 완전히 동일하게 공유하는 형태(API.md 7장). */
@@ -24,8 +24,8 @@ export class NotificationDto {
   @ApiProperty()
   createdAt: string;
 
-  @ApiProperty({ type: UserSummaryDto })
-  actor: UserSummaryDto;
+  @ApiProperty({ type: AuthorSummaryDto })
+  actor: AuthorSummaryDto;
 
   @ApiProperty({ type: NotificationPostRefDto })
   post: NotificationPostRefDto;

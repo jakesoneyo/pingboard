@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserSummaryDto } from '../../auth/dto/auth-response.dto';
+import { AuthorSummaryDto } from '../../auth/dto/auth-response.dto';
 
 /** 게시글 상세의 댓글 목록 원소이자 `POST .../comments` 응답 형태(API.md 4~5장). */
 export class CommentSummaryDto {
@@ -9,8 +9,8 @@ export class CommentSummaryDto {
   @ApiProperty()
   content: string;
 
-  @ApiProperty({ type: UserSummaryDto })
-  author: UserSummaryDto;
+  @ApiProperty({ type: AuthorSummaryDto })
+  author: AuthorSummaryDto;
 
   @ApiProperty()
   createdAt: string;

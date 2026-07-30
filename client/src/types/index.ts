@@ -3,9 +3,16 @@
  * REST와 소켓 payload가 `NotificationDto`를 공유하므로 타입도 하나만 둔다.
  */
 
+/** 본인 응답(`/auth/*`) 전용 — email을 포함한다. */
 export interface UserSummary {
   id: string;
   email: string;
+  nickname: string;
+}
+
+/** 타인에게 노출되는 작성자/행위자 정보 — email을 포함하지 않는다(서버 B2 대응). */
+export interface AuthorSummary {
+  id: string;
   nickname: string;
 }
 
@@ -21,14 +28,14 @@ export interface MeResponse extends UserSummary {
 export interface CommentSummary {
   id: string;
   content: string;
-  author: UserSummary;
+  author: AuthorSummary;
   createdAt: string;
 }
 
 export interface PostListItem {
   id: string;
   title: string;
-  author: UserSummary;
+  author: AuthorSummary;
   commentCount: number;
   createdAt: string;
 }
@@ -44,7 +51,7 @@ export interface PostDetail {
   id: string;
   title: string;
   content: string;
-  author: UserSummary;
+  author: AuthorSummary;
   createdAt: string;
   comments: CommentSummary[];
 }
@@ -56,7 +63,7 @@ export interface NotificationDto {
   type: NotificationType;
   isRead: boolean;
   createdAt: string;
-  actor: UserSummary;
+  actor: AuthorSummary;
   post: { id: string; title: string };
   commentPreview: string;
 }

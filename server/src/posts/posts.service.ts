@@ -27,7 +27,7 @@ export class PostsService {
     const [rows, total] = await this.posts
       .createQueryBuilder('post')
       .leftJoin('post.author', 'author')
-      .addSelect(['author.id', 'author.nickname', 'author.email'])
+      .addSelect(['author.id', 'author.nickname'])
       .loadRelationCountAndMap('post.commentCount', 'post.comments')
       .orderBy('post.createdAt', 'DESC')
       .skip((page - 1) * limit)
@@ -39,7 +39,6 @@ export class PostsService {
       title: post.title,
       author: {
         id: post.author.id,
-        email: post.author.email,
         nickname: post.author.nickname,
       },
       // loadRelationCountAndMap이 런타임에 채우는 필드라 엔티티 타입엔 없다.
@@ -88,22 +87,10 @@ export class PostsService {
       id: saved.id,
       title: saved.title,
       content: saved.content,
-      author: { id: author.id, email: author.email, nickname: author.nickname },
+      author: { id: author.id, nickname: author.nickname },
       createdAt: saved.createdAt.toISOString(),
       comments: [],
     };
-  }
-
-  /** 존재 여부만 필요한 호출(댓글 작성 시)을 위한 경량 조회. */
-  async findAuthorId(postId: string): Promise<string> {
-    const post = await this.posts.findOne({
-      where: { id: postId },
-      select: ['id', 'authorId'],
-    });
-    if (!post) {
-      throw new NotFoundException('게시글을 찾을 수 없습니다.');
-    }
-    return post.authorId;
   }
 
   private toDetailDto(post: Post): PostDetailDto {
@@ -113,7 +100,6 @@ export class PostsService {
       content: post.content,
       author: {
         id: post.author.id,
-        email: post.author.email,
         nickname: post.author.nickname,
       },
       createdAt: post.createdAt.toISOString(),
@@ -122,7 +108,6 @@ export class PostsService {
         content: comment.content,
         author: {
           id: comment.author.id,
-          email: comment.author.email,
           nickname: comment.author.nickname,
         },
         createdAt: comment.createdAt.toISOString(),
