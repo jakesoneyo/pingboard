@@ -2,7 +2,7 @@
 
 Vite + React + TypeScript + Tailwind v4 프론트엔드. 전체 설계는 저장소 루트의
 `SPEC.md` / `DESIGN.md` / `API.md` / `PLAN.md`를 참고한다.
-(최종 사용자용 README + 데모 GIF는 덩어리 C에서 저장소 루트에 작성된다.)
+실행법·아키텍처 다이어그램·데모 GIF는 저장소 루트의 [`README.md`](../README.md)에 있다.
 
 ## 준비
 

@@ -2,7 +2,7 @@
 
 NestJS 11 + TypeORM 0.3 + Neon Postgres 백엔드. 전체 프로젝트 설계는 저장소 루트의
 `SPEC.md`/`ARCHITECTURE.md`/`DATA-MODEL.md`/`API.md`/`PLAN.md`를 참고한다.
-(사용자용 최종 README + 데모 GIF는 프론트엔드 구현 이후 저장소 루트에 작성될 예정이다.)
+실행법·아키텍처 다이어그램·데모 GIF는 저장소 루트의 [`README.md`](../README.md)에 있다.
 
 ## 준비
 
