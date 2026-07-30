@@ -3,6 +3,8 @@
 미니 게시판 위에 얹은 **실시간 알림함**. 게시판/댓글은 알림을 발생시키기 위한 최소한의 그릇이고,
 이 프로젝트가 실제로 증명하는 것은 **"소켓은 신뢰할 수 없는 채널"이라는 전제 위에서 실시간 알림을 설계하는 법**이다.
 
+**라이브 데모**: https://pingboard-sigma.vercel.app (백엔드: Render 무료 티어 — 첫 접속 시 콜드스타트로 수십 초 지연될 수 있음, 자세한 내용은 "알려진 한계" 참고)
+
 - 내 글에 댓글이 달리면 새로고침 없이 즉시 알림 뱃지가 올라간다.
 - 접속이 끊긴 동안(와이파이 전환, 서버 재시작 등) 온 알림도 재연결 시 **REST 재동기화**로 전부 채워지고, 소켓 수신분과 **중복 없이** 병합된다.
 - 같은 계정으로 탭 여러 개를 열어도 **모든 탭에 동시에** 알림이 도착하고, 한 탭에서 읽으면 나머지 탭 뱃지도 함께 줄어든다.
@@ -154,20 +156,20 @@ sequenceDiagram
 
 ## 기술 스택
 
-| 영역                  | 선택                                                                             |
-| --------------------- | -------------------------------------------------------------------------------- |
-| 백엔드                | NestJS 11, TypeScript                                                            |
-| ORM / 마이그레이션    | TypeORM 0.3 (Repository + QueryBuilder), 마이그레이션 CLI                        |
-| DB                    | Neon Postgres (서버리스, TCP `pg` 드라이버)                                      |
-| 인증                  | Passport-JWT (access token 단일, 1일 만료)                                       |
-| 실시간                | `@nestjs/websockets` + `@nestjs/platform-socket.io` (기본 socket.io 어댑터)      |
-| 검증                  | class-validator / class-transformer (백엔드), Zod (프론트)                       |
-| API 문서              | `@nestjs/swagger` (`GET /docs`)                                                  |
-| 테스트                | Jest + supertest (리포지토리 목 기반 단위 테스트, S 티어라 Testcontainers 면제)  |
-| 프론트                | Vite + React 19 + TypeScript + Tailwind v4                                       |
-| 클라 상태 / 서버 상태 | Zustand / TanStack Query                                                         |
-| 실시간 클라           | socket.io-client (자동 재연결)                                                   |
-| 배포                  | 프론트 Vercel(예정) · 백엔드 로컬 Docker 기본, Render 라이브는 별도 승인 후 결정 |
+| 영역                  | 선택                                                                                                                               |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 백엔드                | NestJS 11, TypeScript                                                                                                              |
+| ORM / 마이그레이션    | TypeORM 0.3 (Repository + QueryBuilder), 마이그레이션 CLI                                                                          |
+| DB                    | Neon Postgres (서버리스, TCP `pg` 드라이버)                                                                                        |
+| 인증                  | Passport-JWT (access token 단일, 1일 만료)                                                                                         |
+| 실시간                | `@nestjs/websockets` + `@nestjs/platform-socket.io` (기본 socket.io 어댑터)                                                        |
+| 검증                  | class-validator / class-transformer (백엔드), Zod (프론트)                                                                         |
+| API 문서              | `@nestjs/swagger` (`GET /docs`)                                                                                                    |
+| 테스트                | Jest + supertest (리포지토리 목 기반 단위 테스트, S 티어라 Testcontainers 면제)                                                    |
+| 프론트                | Vite + React 19 + TypeScript + Tailwind v4                                                                                         |
+| 클라 상태 / 서버 상태 | Zustand / TanStack Query                                                                                                           |
+| 실시간 클라           | socket.io-client (자동 재연결)                                                                                                     |
+| 배포                  | 프론트 [Vercel](https://pingboard-sigma.vercel.app) 라이브 · 백엔드 [Render](https://pingboard-server.onrender.com)(Docker) 라이브 |
 
 ## 실행법
 
