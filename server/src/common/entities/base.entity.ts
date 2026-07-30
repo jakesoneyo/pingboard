@@ -11,6 +11,7 @@ export abstract class BaseEntity {
   @PrimaryColumn('uuid', { default: () => 'gen_random_uuid()' })
   id: string;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  // DATA-MODEL 2장이 전 테이블 공통으로 snake_case 컬럼명을 명시하므로 명시적으로 오버라이드한다.
+  @CreateDateColumn({ type: 'timestamptz', name: 'created_at' })
   createdAt: Date;
 }
